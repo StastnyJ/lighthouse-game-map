@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: swordmap
+      POSTGRES_USER: jksp2026-bojovka
+      POSTGRES_PASSWORD: swordmap-password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U jksp2026-bojovka"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web:
     build: .
     command: gunicorn swordmap_project.wsgi:application --bind 0.0.0.0:8000
@@ -12,6 +28,9 @@ services:
       - ./assets:/app/assets
     env_file:
       - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   game_loop:
     build: .
@@ -22,4 +41,8 @@ services:
     env_file:
       - .env
     depends_on:
+      - postgres
       - web
+
+volumes:
+  postgres_data:

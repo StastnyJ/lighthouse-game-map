@@ -148,6 +148,8 @@ def map_view(request, role):
                 if timezone.is_naive(start_time):
                     start_time = timezone.make_aware(start_time)
                 
+                if game.start_time != start_time:
+                    game.zone_bonus_processed_at = None
                 game.start_time = start_time
                 game.duration_minutes = int(duration)
                 game.end_time = start_time + timezone.timedelta(minutes=int(duration))

@@ -31,6 +31,17 @@ Edit `game_config.json` to define zones, bases, and their coordinates. Real-worl
 - Teams are defined in the `teams` section of `game_config.json`. The `owner` field in the zones must match the name of a team defined there.
 - Running `init_game_data` will apply these configurations and reset all team scores to 0.
 
+The `scoring` section also supports recurring zone bonuses alongside the existing scoring methods:
+
+```json
+"scoring": {
+  "zone_bonus_interval_minutes": 10,
+  "zone_bonus_points_per_zone": 5
+}
+```
+
+This awards 5 bonus points per currently owned zone at minutes 10, 20, 30, etc. from the game start, including an interval exactly at game end. Bases count; neutral, contested, and capturing zones do not. Set either value to `0` to disable this method (the default). Payout progress is stored in the database to prevent duplicates after a restart. If processing is delayed, missed intervals are paid using ownership when processing resumes, capped at game end. Configure these values before starting the game; live changes apply from the last processing time. Run `python manage.py migrate` after updating the application.
+
 ## Setup (Docker)
 
 The recommended way to run the application is via Docker Compose. Ensure your `.env` file is set up with PostgreSQL database credentials.

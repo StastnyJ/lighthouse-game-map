@@ -35,6 +35,7 @@ class Command(BaseCommand):
         game.bottom_right_latitude = config.get('bottomRight', {}).get('latitude', game.bottom_right_latitude)
         game.accepted_distance = config.get('accepted_distance', game.accepted_distance)
         game.end_bonus_applied = False
+        game.zone_bonus_processed_at = None
         game.save()
         GameSnapshot.objects.filter(game=game).delete()
         self.stdout.write(self.style.SUCCESS("Game instance created/exists"))

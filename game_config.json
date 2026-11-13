@@ -1,5 +1,5 @@
 {
-  "mode": "QR",
+  "mode": "FREE",
   "accepted_distance": 25,
   "topLeft": {
     "latitude": 50.629044,
@@ -8,6 +8,15 @@
   "bottomRight": {
     "latitude": 50.623955,
     "longitude": 15.612298
+  },
+  "scoring": {
+    "capture": 0,
+    "recapture_min": 0,
+    "recapture_max": 0,
+    "per_zone_per_minute": 0,
+    "end_game_bonus_per_zone": 0,
+    "zone_bonus_interval_minutes": 15,
+    "zone_bonus_points_per_zone": 1
   },
   "play_area_vertices": [
     {
@@ -130,11 +139,7 @@
       "is_base": true,
       "owner": "Matúš Púll",
       "color": "#dc143c",
-      "adjacent_zones": [
-        2,
-        3,
-        5
-      ]
+      "adjacent_zones": [2, 3, 5]
     },
     {
       "id": 2,
@@ -143,11 +148,7 @@
       "longitude": 15.605976,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        1,
-        3,
-        25
-      ]
+      "adjacent_zones": [1, 3, 25]
     },
     {
       "id": 3,
@@ -156,11 +157,7 @@
       "longitude": 15.606574,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        1,
-        2,
-        4
-      ]
+      "adjacent_zones": [1, 2, 4]
     },
     {
       "id": 4,
@@ -169,12 +166,7 @@
       "longitude": 15.607402,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        3,
-        5,
-        6,
-        7
-      ]
+      "adjacent_zones": [3, 5, 6, 7]
     },
     {
       "id": 5,
@@ -183,12 +175,7 @@
       "longitude": 15.606425,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        1,
-        4,
-        6,
-        23
-      ]
+      "adjacent_zones": [1, 4, 6, 23]
     },
     {
       "id": 6,
@@ -197,12 +184,7 @@
       "longitude": 15.607724,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        4,
-        5,
-        7,
-        23
-      ]
+      "adjacent_zones": [4, 5, 7, 23]
     },
     {
       "id": 7,
@@ -211,13 +193,7 @@
       "longitude": 15.608561,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        4,
-        6,
-        8,
-        10,
-        11
-      ]
+      "adjacent_zones": [4, 6, 8, 10, 11]
     },
     {
       "id": 8,
@@ -226,11 +202,7 @@
       "longitude": 15.609344,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        7,
-        9,
-        25
-      ]
+      "adjacent_zones": [7, 9, 25]
     },
     {
       "id": 9,
@@ -240,11 +212,7 @@
       "is_base": true,
       "owner": "Zdenda Půlříše",
       "color": "#daa520",
-      "adjacent_zones": [
-        8,
-        10,
-        22
-      ]
+      "adjacent_zones": [8, 10, 22]
     },
     {
       "id": 10,
@@ -253,12 +221,7 @@
       "longitude": 15.609901,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        7,
-        9,
-        11,
-        14
-      ]
+      "adjacent_zones": [7, 9, 11, 14]
     },
     {
       "id": 11,
@@ -267,11 +230,7 @@
       "longitude": 15.608948,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        7,
-        10,
-        12
-      ]
+      "adjacent_zones": [7, 10, 12]
     },
     {
       "id": 12,
@@ -280,11 +239,7 @@
       "longitude": 15.608298,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        11,
-        13,
-        23
-      ]
+      "adjacent_zones": [11, 13, 23]
     },
     {
       "id": 13,
@@ -293,12 +248,7 @@
       "longitude": 15.608683,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        12,
-        14,
-        15,
-        16
-      ]
+      "adjacent_zones": [12, 14, 15, 16]
     },
     {
       "id": 14,
@@ -307,11 +257,7 @@
       "longitude": 15.610185,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        10,
-        13,
-        14
-      ]
+      "adjacent_zones": [10, 13, 14]
     },
     {
       "id": 15,
@@ -320,11 +266,7 @@
       "longitude": 15.609155,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        13,
-        17,
-        18
-      ]
+      "adjacent_zones": [13, 17, 18]
     },
     {
       "id": 16,
@@ -333,11 +275,7 @@
       "longitude": 15.607855,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        23,
-        13,
-        17
-      ]
+      "adjacent_zones": [23, 13, 17]
     },
     {
       "id": 17,
@@ -347,12 +285,7 @@
       "is_base": true,
       "owner": "Jan Tuňák",
       "color": "#4169e1",
-      "adjacent_zones": [
-        16,
-        15,
-        18,
-        19
-      ]
+      "adjacent_zones": [16, 15, 18, 19]
     },
     {
       "id": 18,
@@ -361,11 +294,7 @@
       "longitude": 15.609896,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        17,
-        15,
-        24
-      ]
+      "adjacent_zones": [17, 15, 24]
     },
     {
       "id": 19,
@@ -374,10 +303,7 @@
       "longitude": 15.611964,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        17,
-        20
-      ]
+      "adjacent_zones": [17, 20]
     },
     {
       "id": 20,
@@ -386,11 +312,7 @@
       "longitude": 15.611972,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        24,
-        19,
-        21
-      ]
+      "adjacent_zones": [24, 19, 21]
     },
     {
       "id": 21,
@@ -399,10 +321,7 @@
       "longitude": 15.611629,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        20,
-        22
-      ]
+      "adjacent_zones": [20, 22]
     },
     {
       "id": 22,
@@ -411,10 +330,7 @@
       "longitude": 15.611044,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        21,
-        9
-      ]
+      "adjacent_zones": [21, 9]
     },
     {
       "id": 23,
@@ -423,12 +339,7 @@
       "longitude": 15.607302,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        5,
-        6,
-        12,
-        16
-      ]
+      "adjacent_zones": [5, 6, 12, 16]
     },
     {
       "id": 24,
@@ -437,11 +348,7 @@
       "longitude": 15.610951,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        14,
-        20,
-        18
-      ]
+      "adjacent_zones": [14, 20, 18]
     },
     {
       "id": 25,
@@ -450,10 +357,7 @@
       "longitude": 15.607693,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [
-        2,
-        8
-      ]
+      "adjacent_zones": [2, 8]
     }
   ]
 }

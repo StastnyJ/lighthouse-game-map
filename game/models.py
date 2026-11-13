@@ -25,6 +25,7 @@ class Game(models.Model):
     bottom_right_longitude = models.FloatField(default=0.0)
     bottom_right_latitude = models.FloatField(default=0.0)
     end_bonus_applied = models.BooleanField(default=False)
+    zone_bonus_processed_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"Game {self.id} ({'Active' if self.is_active else 'Inactive'})"

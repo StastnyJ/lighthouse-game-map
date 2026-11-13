@@ -84,9 +84,11 @@ WSGI_APPLICATION = 'swordmap_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'swordmap',
-        'USER': 'jksp2026-bojovka',
-        'HOST': '',  # empty string = Unix domain socket
+        'NAME': os.getenv('DATABASE_NAME', 'swordmap'),
+        'USER': os.getenv('DATABASE_USER', 'jksp2026-bojovka'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'swordmap-password'),
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),
+        'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
 }
 
