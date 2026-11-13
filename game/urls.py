@@ -3,6 +3,8 @@ from . import views
 from . import views_api
 
 urlpatterns = [
+    path('api/player-location/', views_api.report_player_location, name='report_player_location'),
+    path('api/admin/player-locations/', views_api.admin_player_locations, name='admin_player_locations'),
     path('', views.index, name='index'),
     path('rules/', views.rules_view, name='rules'),
     path('stats/', views.stats_view, name='stats'),

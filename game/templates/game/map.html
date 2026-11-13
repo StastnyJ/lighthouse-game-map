@@ -1,8 +1,8 @@
-{% load static %}
+{% load static l10n %}
 <!doctype html>
 <html>
   <head>
-    <title>KSP bojovka - {{ role|title }}</title>
+    <title>{{ page_title }} - {{ role|title }}</title>
     <link rel="icon" type="image/svg+xml" href="{% static 'game/favicon.svg' %}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
@@ -184,6 +184,9 @@
       <div class="map-panel">
         <div id="map"></div>
       </div>
+      <div role="status" id="gps-status">GPS: čekání na polohu…</div>
+      <button type="button" id="locate-player" disabled>Moje poloha</button>
+      <div role="status" id="location-sync-status"></div>
 
     <div id="info-panel">
       <div class="info-row">
@@ -254,7 +257,9 @@
 
     <script>
       const role = "{{ role }}";
+      const locationToken = "{{ location_token|escapejs }}";
       const GAME_MODE = "{{ game.mode|default:'STANDARD' }}";
+      const ZONE_RADIUS_METERS = {{ game.accepted_distance|unlocalize }};
       const csrfToken = "{{ csrf_token }}";
       const GAME_AREA_VERTICES = JSON.parse("{{ play_area_vertices_json|escapejs }}");
 
@@ -282,6 +287,8 @@
       map.getPane("edgesPane").style.zIndex = 410;
       map.createPane("zonesPane");
       map.getPane("zonesPane").style.zIndex = 420;
+      map.createPane("playersPane");
+      map.getPane("playersPane").style.zIndex = 450;
       const bounds = [
         [parseFloat("{{ game.bottom_right_latitude|default:'0' }}"), parseFloat("{{ game.top_left_longitude|default:'0' }}")],
         [parseFloat("{{ game.top_left_latitude|default:'0' }}"), parseFloat("{{ game.bottom_right_longitude|default:'0' }}")],
@@ -358,8 +365,8 @@
           color: strokeColor,
           weight: strokeWeight,
           fillColor: fillColor,
-          fillOpacity: 0.9,
-          radius: zone.is_base ? 16 : 11,
+          fillOpacity: 0.75,
+          radius: ZONE_RADIUS_METERS,
         };
       }
 
@@ -414,7 +421,7 @@
       function drawZones() {
         zoneSeed.forEach((zone) => {
           zoneMeta.set(zone.id, zone);
-          const layer = L.circleMarker([zone.lat, zone.lng], {
+          const layer = L.circle([zone.lat, zone.lng], {
             ...getZoneStyle(zone),
             pane: "zonesPane",
           }).addTo(map);
@@ -688,6 +695,7 @@
         const latLng = [latitude, longitude];
         if (!playerMarker) {
           playerMarker = L.circleMarker(latLng, {
+            pane: 'playersPane',
             radius: 7,
             color: "#fff",
             weight: 2,
@@ -700,6 +708,7 @@
 
         if (!playerAccuracy) {
           playerAccuracy = L.circle(latLng, {
+            pane: 'playersPane',
             radius: 18,
             color: "#1e90ff",
             weight: 1,
@@ -712,34 +721,125 @@
       }
 
       function startGpsTracking() {
+        const status = document.getElementById('gps-status');
         if (!navigator.geolocation) {
-          console.warn("Geolocation is not supported by this browser.");
+          status.textContent = 'GPS není v tomto prohlížeči dostupné. Zkontrolujte oprávnění k poloze a zabezpečení připojení.';
           return;
         }
 
-        navigator.geolocation.watchPosition(
-          (position) => {
+        function showPosition(position) {
+            if (position.timestamp < lastGpsUpdate) return;
             currentLatitude = position.coords.latitude;
             currentLongitude = position.coords.longitude;
 
             drawPlayerLocation(currentLatitude, currentLongitude);
-          },
-          (error) => {
+            playerAccuracy.setRadius(position.coords.accuracy);
+            status.textContent = `GPS: poloha nalezena (přesnost ±${Math.round(position.coords.accuracy)} m)`;
+            document.getElementById('locate-player').disabled = false;
+            lastGpsUpdate = position.timestamp;
+        }
+
+        function showLocationError(error) {
+            if (lastGpsUpdate && error.code !== 1) {
+              status.textContent = 'GPS: zobrazuji poslední známou polohu, čekám na aktualizaci…';
+              return;
+            }
+            status.textContent = error.code === 1
+              ? 'GPS: povolte přístup k poloze v nastavení prohlížeče.'
+              : error.code === 2 ? 'GPS: poloha není dostupná.' : 'GPS: stále hledám polohu. Zkuste zapnout polohové služby nebo přejít ven.';
             console.warn("Geolocation error:", error);
-          },
+        }
+
+        // Obtain a quick network/cached fix while precise GPS starts up.
+        navigator.geolocation.getCurrentPosition(showPosition, showLocationError, {
+          enableHighAccuracy: false,
+          maximumAge: 30000,
+          timeout: 30000,
+        });
+        navigator.geolocation.watchPosition(
+          showPosition,
+          showLocationError,
           {
             enableHighAccuracy: true,
             maximumAge: 5000,
-            timeout: 10000,
+            timeout: 60000,
           },
         );
       }
 
+      let lastGpsUpdate = 0;
+      let lastLocationReport = 0;
+      const otherPlayerMarkers = new Map();
+
+      async function reportPlayerLocation() {
+        if (role === 'admin2536' || !lastGpsUpdate || Date.now() - lastGpsUpdate > 60000 || Date.now() - lastLocationReport < 10000) return;
+        lastLocationReport = Date.now();
+        try {
+          const response = await fetch("{% url 'report_player_location' %}", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken, 'X-Map-Token': locationToken },
+            body: JSON.stringify({ latitude: currentLatitude, longitude: currentLongitude }),
+          });
+          document.getElementById('location-sync-status').textContent = response.ok
+            ? 'Poloha sdílena s administrátorem.' : `Sdílení polohy selhalo (${response.status}). Obnovte stránku.`;
+        } catch (error) {
+          console.warn('Location reporting failed:', error);
+          document.getElementById('location-sync-status').textContent = 'Sdílení polohy selhalo: zkontrolujte připojení.';
+        }
+      }
+
+      async function updateAdminPlayerLocations() {
+        if (role !== 'admin2536') return;
+        try {
+          const response = await fetch("{% url 'admin_player_locations' %}", { cache: 'no-store', headers: { 'X-Map-Token': locationToken } });
+          if (!response.ok) {
+            document.getElementById('location-sync-status').textContent = `Načtení hráčů selhalo (${response.status}). Obnovte stránku.`;
+            return;
+          }
+          const data = await response.json();
+          document.getElementById('location-sync-status').textContent = `Aktivní hráči s GPS: ${data.players.length}`;
+          const activeIds = new Set();
+          data.players.forEach((player) => {
+            activeIds.add(player.id);
+            let marker = otherPlayerMarkers.get(player.id);
+            if (!marker) {
+              marker = L.circleMarker([player.latitude, player.longitude], {
+                pane: 'playersPane',
+                radius: 8, color: '#fff', weight: 2, fillOpacity: 1,
+              }).addTo(map);
+              otherPlayerMarkers.set(player.id, marker);
+            }
+            marker.setLatLng([player.latitude, player.longitude]);
+            marker.setStyle({ fillColor: player.color });
+            const label = document.createElement('span');
+            label.textContent = player.team;
+            marker.bindTooltip(label);
+          });
+          otherPlayerMarkers.forEach((marker, id) => {
+            if (!activeIds.has(id)) {
+              map.removeLayer(marker);
+              otherPlayerMarkers.delete(id);
+            }
+          });
+        } catch (error) {
+          console.warn('Player locations unavailable:', error);
+          document.getElementById('location-sync-status').textContent = 'Polohy hráčů nejsou dostupné: zkontrolujte připojení.';
+        }
+      }
+
+      setInterval(reportPlayerLocation, 10000);
+      document.getElementById('locate-player').addEventListener('click', () => {
+        if (currentLatitude !== null && currentLongitude !== null) {
+          map.setView([currentLatitude, currentLongitude], Math.max(map.getZoom(), 16));
+        }
+      });
+      setInterval(updateAdminPlayerLocations, 5000);
       setInterval(updateGameState, 1000);
       window.addEventListener("load", () => {
         setupModeUi();
         startGpsTracking();
         updateGameState();
+        updateAdminPlayerLocations();
       });
       window.addEventListener("resize", () => {
         map.invalidateSize();

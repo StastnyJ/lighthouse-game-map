@@ -2,6 +2,9 @@ from django.db import migrations
 
 
 def rebuild_zone_table_if_legacy(apps, schema_editor):
+    if schema_editor.connection.vendor != 'sqlite':
+        return
+
     with schema_editor.connection.cursor() as cursor:
         columns = {
             row[1] for row in cursor.execute("PRAGMA table_info(game_zone)").fetchall()

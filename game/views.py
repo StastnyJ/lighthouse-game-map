@@ -11,6 +11,7 @@ import hashlib
 import html
 from urllib.parse import quote, unquote
 from pathlib import Path
+from django.core import signing
 
 map_width, map_height = 1189, 1140  # Example dimensions for coordinate calculations
 
@@ -207,6 +208,7 @@ def map_view(request, role):
     
     from django.conf import settings
     context = {
+        'location_token': signing.dumps(role, salt='map-locations'),
         'role': role,
         'zones': zones,
         'capturing_zones': capturing_zones,

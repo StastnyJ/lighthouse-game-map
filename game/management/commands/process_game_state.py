@@ -7,6 +7,7 @@ import datetime
 import time
 import json
 from pathlib import Path
+from game.config import load_game_settings
 
 
 def save_minute_snapshot(game, now, minute_index=None, force=False):
@@ -122,6 +123,7 @@ class Command(BaseCommand):
             
             # Load scoring config on each iteration (allows live updates)
             scoring_config = load_scoring_config()
+            capture_duration_seconds = load_game_settings()['capture_duration_seconds']
             
             # Check Game Status
             game = Game.objects.first()
@@ -179,7 +181,7 @@ class Command(BaseCommand):
             for zone in capturing_zones:
                 if zone.capture_started_at:
                     diff = now - zone.capture_started_at
-                    if diff.total_seconds() >= 60: # 1 minute
+                    if diff.total_seconds() >= capture_duration_seconds:
                         capturing_team = zone.capturing_team
                         if capturing_team is None:
                             zone.status = 'NEUTRAL'

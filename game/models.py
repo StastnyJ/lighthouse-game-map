@@ -1,5 +1,14 @@
 from django.db import models
 from django.utils import timezone
+import uuid
+
+
+class PlayerLocation(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    team = models.ForeignKey('Team', on_delete=models.CASCADE)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    updated_at = models.DateTimeField(default=timezone.now, db_index=True)
 
 class Team(models.Model):
     name = models.CharField(max_length=50, unique=True)

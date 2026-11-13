@@ -1,8 +1,66 @@
 from django.http import JsonResponse
 from django.utils import timezone
 from .models import Zone, Team, Game, GameSnapshot
+from .models import PlayerLocation
+from django.views.decorators.http import require_POST, require_GET
+from django.views.decorators.cache import never_cache
+import datetime
+import json
+import math
+import uuid
+from django.core import signing
+from .config import load_game_settings
+
+
+def location_role(request):
+    try:
+        return signing.loads(request.headers.get('X-Map-Token', ''), salt='map-locations', max_age=86400)
+    except signing.BadSignature:
+        return None
+
+
+@require_POST
+def report_player_location(request):
+    role = location_role(request)
+    team = Team.objects.filter(name__iexact=role).first() if role else None
+    if not team:
+        return JsonResponse({'error': 'Open a team map first.'}, status=403)
+    try:
+        data = json.loads(request.body)
+        latitude = float(data['latitude'])
+        longitude = float(data['longitude'])
+        if not math.isfinite(latitude) or not math.isfinite(longitude) or not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+            raise ValueError
+    except (ValueError, TypeError, KeyError):
+        return JsonResponse({'error': 'Invalid coordinates.'}, status=400)
+    player_id = request.session.get('player_location_id')
+    if not player_id:
+        player_id = str(uuid.uuid4())
+        request.session['player_location_id'] = player_id
+    now = timezone.now()
+    PlayerLocation.objects.filter(updated_at__lt=now - datetime.timedelta(minutes=5)).delete()
+    PlayerLocation.objects.update_or_create(pk=player_id, defaults={
+        'team': team, 'latitude': latitude, 'longitude': longitude, 'updated_at': now,
+    })
+    return JsonResponse({'ok': True})
+
+
+@never_cache
+@require_GET
+def admin_player_locations(request):
+    if location_role(request) != 'admin2536':
+        return JsonResponse({'error': 'Admin access required.'}, status=403)
+    locations = PlayerLocation.objects.select_related('team').filter(
+        updated_at__gte=timezone.now() - datetime.timedelta(seconds=60)
+    )
+    return JsonResponse({'players': [{
+        'id': str(player.pk), 'team': player.team.name, 'color': player.team.color,
+        'latitude': player.latitude, 'longitude': player.longitude,
+        'updated_at': player.updated_at.isoformat(),
+    } for player in locations]})
 
 def game_state(request):
+    capture_duration_seconds = load_game_settings()['capture_duration_seconds']
     zones = Zone.objects.all()
     capturing_zones = Zone.objects.filter(status='CAPTURING')
     teams = Team.objects.all()
@@ -41,7 +99,7 @@ def game_state(request):
         remaining = 0
         if zone.capture_started_at:
             elapsed = (now - zone.capture_started_at).total_seconds()
-            remaining = max(0, 60 - int(elapsed))
+            remaining = max(0, capture_duration_seconds - int(elapsed))
             
         capturing_data.append({
             'name': zone.name,

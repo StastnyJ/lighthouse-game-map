@@ -4,6 +4,8 @@ Swordmap (KSP bojovka) is an interactive, location-based territorial control gam
 
 ## Configuration
 
+Set `page_title` (default `"KSP bojovka"`) and `capture_duration_seconds` (a positive integer, default `60`) at the top level of `game_config.json`. The title appears in all page titles and the team selection heading. Capture duration controls both capture completion and the displayed countdown. These settings are read live; refresh a page to see a changed title. A duration change also affects captures already in progress. QR captures retain their existing instant-capture behavior.
+
 Edit `game_config.json` to define zones, bases, and their coordinates. Real-world coordinates (`latitude`, `longitude`) are now used instead of 2D coordinates:
 
 ```json
@@ -65,5 +67,6 @@ The recommended way to run the application is via Docker Compose. Ensure your `.
 - Join a Team (or connect as an Admin).
 - Check the **Pravidla** tab for complete game documentation and combat rules.
 - View real-time scores in the **Statistiky** tab.
+- The admin map (`/map/admin2536/`) shows players as team-colored markers, refreshed every five seconds. Players must keep their team map open and allow browser location access (HTTPS or localhost required). Locations are reported every ten seconds and disappear from the admin map after sixty seconds without updates. Location access follows the existing admin map role; anyone with the admin URL can obtain that role.
 - Switch to the **Hra** tab, follow the OSM map using your live GPS location, and tap reachable nodes to capture them for your team!
 

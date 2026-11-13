@@ -1,363 +1,654 @@
 {
+  "page_title": "Šaliněco",
+  "capture_duration_seconds": 1,
   "mode": "FREE",
-  "accepted_distance": 25,
+  "accepted_distance": 100,
   "topLeft": {
-    "latitude": 50.629044,
-    "longitude": 15.604924
+    "latitude": 49.2501,
+    "longitude": 16.5196
   },
   "bottomRight": {
-    "latitude": 50.623955,
-    "longitude": 15.612298
+    "latitude": 49.1224,
+    "longitude": 16.7331
   },
   "scoring": {
     "capture": 0,
     "recapture_min": 0,
     "recapture_max": 0,
     "per_zone_per_minute": 0,
-    "end_game_bonus_per_zone": 0,
+    "end_game_bonus_per_zone": 1,
     "zone_bonus_interval_minutes": 15,
     "zone_bonus_points_per_zone": 1
   },
-  "play_area_vertices": [
-    {
-      "latitude": 50.628845,
-      "longitude": 15.604924
-    },
-    {
-      "latitude": 50.629044,
-      "longitude": 15.605987
-    },
-    {
-      "latitude": 50.629005,
-      "longitude": 15.606931
-    },
-    {
-      "latitude": 50.62895,
-      "longitude": 15.607631
-    },
-    {
-      "latitude": 50.628628,
-      "longitude": 15.608325
-    },
-    {
-      "latitude": 50.628254,
-      "longitude": 15.609161
-    },
-    {
-      "latitude": 50.628006,
-      "longitude": 15.609398
-    },
-    {
-      "latitude": 50.627953,
-      "longitude": 15.610064
-    },
-    {
-      "latitude": 50.627407,
-      "longitude": 15.610767
-    },
-    {
-      "latitude": 50.62693,
-      "longitude": 15.611196
-    },
-    {
-      "latitude": 50.626373,
-      "longitude": 15.611662
-    },
-    {
-      "latitude": 50.62571,
-      "longitude": 15.611915
-    },
-    {
-      "latitude": 50.62501,
-      "longitude": 15.612126
-    },
-    {
-      "latitude": 50.62429,
-      "longitude": 15.612298
-    },
-    {
-      "latitude": 50.6242,
-      "longitude": 15.610672
-    },
-    {
-      "latitude": 50.623955,
-      "longitude": 15.60877
-    },
-    {
-      "latitude": 50.624107,
-      "longitude": 15.608272
-    },
-    {
-      "latitude": 50.624912,
-      "longitude": 15.607947
-    },
-    {
-      "latitude": 50.625435,
-      "longitude": 15.607492
-    },
-    {
-      "latitude": 50.62661,
-      "longitude": 15.606759
-    },
-    {
-      "latitude": 50.62622,
-      "longitude": 15.607119
-    },
-    {
-      "latitude": 50.626972,
-      "longitude": 15.606379
-    },
-    {
-      "latitude": 50.627373,
-      "longitude": 15.605772
-    },
-    {
-      "latitude": 50.62811,
-      "longitude": 15.605303
-    }
-  ],
+  "play_area_vertices": [],
   "teams": [
     {
-      "name": "Matúš Púll",
+      "name": "Červená",
       "color": "#dc143c"
     },
     {
-      "name": "Jan Tuňák",
+      "name": "Modrá",
       "color": "#4169e1"
     },
     {
-      "name": "Zdenda Půlříše",
-      "color": "#daa520"
+      "name": "Žlutá",
+      "color": "#ffd700"
+    },
+    {
+      "name": "Zelená",
+      "color": "#228b22"
+    },
+    {
+      "name": "Oranžová",
+      "color": "#ff8c00"
+    },
+    {
+      "name": "Fialová",
+      "color": "#8a2be2"
+    },
+    {
+      "name": "Růžová",
+      "color": "#ff69b4"
+    },
+    {
+      "name": "Hnědá",
+      "color": "#8b4513"
+    },
+    {
+      "name": "Světle modrá",
+      "color": "#00ced1"
+    },
+
+    {
+      "name": "Světle zelená",
+      "color": "#a4e600"
     }
   ],
   "zones": [
     {
       "id": 1,
-      "name": "Matúš Púll",
-      "latitude": 50.628315,
-      "longitude": 15.605578,
-      "is_base": true,
-      "owner": "Matúš Púll",
-      "color": "#dc143c",
-      "adjacent_zones": [2, 3, 5]
+      "name": "Hlavní nádraží",
+      "latitude": 49.191626,
+      "longitude": 16.612808,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
     },
     {
       "id": 2,
-      "name": "Klášter",
-      "latitude": 50.628986,
-      "longitude": 15.605976,
+      "name": "Česká",
+      "latitude": 49.19797,
+      "longitude": 16.60599,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [1, 3, 25]
+      "adjacent_zones": []
     },
     {
       "id": 3,
-      "name": "Zahrada",
-      "latitude": 50.627895,
-      "longitude": 15.606574,
+      "name": "Moravské náměstí",
+      "latitude": 49.199416,
+      "longitude": 16.608437,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [1, 2, 4]
+      "adjacent_zones": []
     },
     {
       "id": 4,
-      "name": "U jezírka",
-      "latitude": 50.627438,
-      "longitude": 15.607402,
+      "name": "Mendlovo náměstí",
+      "latitude": 49.190207,
+      "longitude": 16.593793,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [3, 5, 6, 7]
+      "adjacent_zones": []
     },
     {
       "id": 5,
-      "name": "KRNAP",
-      "latitude": 50.627007,
-      "longitude": 15.606425,
+      "name": "Stará osada",
+      "latitude": 49.202304,
+      "longitude": 16.641929,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [1, 4, 6, 23]
+      "adjacent_zones": []
     },
     {
       "id": 6,
-      "name": "Pod stromy",
-      "latitude": 50.62687,
-      "longitude": 15.607724,
+      "name": "Královo Pole, nádraží",
+      "latitude": 49.230183,
+      "longitude": 16.59582,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [4, 5, 7, 23]
+      "adjacent_zones": []
     },
     {
       "id": 7,
-      "name": "Zámek",
-      "latitude": 50.627186,
-      "longitude": 15.608561,
+      "name": "Osová",
+      "latitude": 49.169074,
+      "longitude": 16.566732,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [4, 6, 8, 10, 11]
+      "adjacent_zones": []
     },
     {
       "id": 8,
-      "name": "Betlém",
-      "latitude": 50.627632,
-      "longitude": 15.609344,
+      "name": "Nemocnice Bohunice",
+      "latitude": 49.175846,
+      "longitude": 16.567196,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [7, 9, 25]
+      "adjacent_zones": []
     },
     {
       "id": 9,
-      "name": "Zdenda Půlříše",
-      "latitude": 50.62756,
-      "longitude": 15.610292,
-      "is_base": true,
-      "owner": "Zdenda Půlříše",
-      "color": "#daa520",
-      "adjacent_zones": [8, 10, 22]
+      "name": "Tomkovo náměstí",
+      "latitude": 49.213816,
+      "longitude": 16.636042,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
     },
     {
       "id": 10,
-      "name": "Okruh",
-      "latitude": 50.62689,
-      "longitude": 15.609901,
+      "name": "Zoologická zahrada",
+      "latitude": 49.227773,
+      "longitude": 16.531579,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [7, 9, 11, 14]
+      "adjacent_zones": []
     },
     {
       "id": 11,
-      "name": "Za zámkem",
-      "latitude": 50.626534,
-      "longitude": 15.608948,
+      "name": "Malinovského náměstí",
+      "latitude": 49.195567,
+      "longitude": 16.613721,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [7, 10, 12]
+      "adjacent_zones": []
     },
     {
       "id": 12,
-      "name": "Křižovatka",
-      "latitude": 50.626102,
-      "longitude": 15.608298,
+      "name": "Šilingrovo náměstí",
+      "latitude": 49.192077,
+      "longitude": 16.604799,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [11, 13, 23]
+      "adjacent_zones": []
     },
     {
       "id": 13,
-      "name": "U jezera",
-      "latitude": 50.62576,
-      "longitude": 15.608683,
+      "name": "Semilasso",
+      "latitude": 49.228076,
+      "longitude": 16.593128,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [12, 14, 15, 16]
+      "adjacent_zones": []
     },
     {
       "id": 14,
-      "name": "Rozcestí",
-      "latitude": 50.62576,
-      "longitude": 15.610185,
+      "name": "Pionýrská",
+      "latitude": 49.207873,
+      "longitude": 16.604339,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [10, 13, 14]
+      "adjacent_zones": []
     },
     {
       "id": 15,
-      "name": "Cesta",
-      "latitude": 50.62511,
-      "longitude": 15.609155,
+      "name": "Jugoslávská",
+      "latitude": 49.204675,
+      "longitude": 16.623891,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [13, 17, 18]
+      "adjacent_zones": []
     },
     {
       "id": 16,
-      "name": "U zdi",
-      "latitude": 50.624977,
-      "longitude": 15.607855,
+      "name": "Konečného náměstí",
+      "latitude": 49.204542,
+      "longitude": 16.595656,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [23, 13, 17]
+      "adjacent_zones": []
     },
     {
       "id": 17,
-      "name": "Jan Tuňák",
-      "latitude": 50.624195,
-      "longitude": 15.608305,
-      "is_base": true,
-      "owner": "Jan Tuňák",
-      "color": "#4169e1",
-      "adjacent_zones": [16, 15, 18, 19]
+      "name": "Vozovna Komín",
+      "latitude": 49.213719,
+      "longitude": 16.559676,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
     },
     {
       "id": 18,
-      "name": "Jih",
-      "latitude": 50.624565,
-      "longitude": 15.609896,
+      "name": "Pisárky",
+      "latitude": 49.19362,
+      "longitude": 16.570198,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [17, 15, 24]
+      "adjacent_zones": []
     },
     {
       "id": 19,
-      "name": "Hálka",
-      "latitude": 50.624306,
-      "longitude": 15.611964,
+      "name": "Řečkovice",
+      "latitude": 49.247143,
+      "longitude": 16.579164,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [17, 20]
+      "adjacent_zones": []
     },
     {
       "id": 20,
-      "name": "Průchod",
-      "latitude": 50.625355,
-      "longitude": 15.611972,
+      "name": "Ečerova",
+      "latitude": 49.218223,
+      "longitude": 16.509159,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [24, 19, 21]
+      "adjacent_zones": []
     },
     {
       "id": 21,
-      "name": "Krbalova",
-      "latitude": 50.626244,
-      "longitude": 15.611629,
+      "name": "Modřice, smyčka",
+      "latitude": 49.126974,
+      "longitude": 16.604488,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [20, 22]
+      "adjacent_zones": []
     },
     {
       "id": 22,
-      "name": "Čecha",
-      "latitude": 50.62709,
-      "longitude": 15.611044,
+      "name": "Rakovecká",
+      "latitude": 49.226049,
+      "longitude": 16.518757,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [21, 9]
+      "adjacent_zones": []
     },
     {
       "id": 23,
-      "name": "Socha",
-      "latitude": 50.62623,
-      "longitude": 15.607302,
+      "name": "Obřany, Babická",
+      "latitude": 49.228325,
+      "longitude": 16.652272,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [5, 6, 12, 16]
+      "adjacent_zones": []
     },
     {
       "id": 24,
-      "name": "Před průchodem",
-      "latitude": 50.6252,
-      "longitude": 15.610951,
+      "name": "Náměstí Míru",
+      "latitude": 49.202138,
+      "longitude": 16.581754,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [14, 20, 18]
+      "adjacent_zones": []
     },
     {
       "id": 25,
-      "name": "Parkoviště",
-      "latitude": 50.628498,
-      "longitude": 15.607693,
+      "name": "Štefánikova čtvrť",
+      "latitude": 49.217256,
+      "longitude": 16.627926,
       "is_base": false,
       "color": "#FFFFFF",
-      "adjacent_zones": [2, 8]
+      "adjacent_zones": []
+    },
+    {
+      "id": 26,
+      "name": "Ústřední hřbitov, smyčka",
+      "latitude": 49.165004,
+      "longitude": 16.598342,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 27,
+      "name": "Starý Lískovec, smyčka",
+      "latitude": 49.171189,
+      "longitude": 16.554169,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 28,
+      "name": "Zemědělská",
+      "latitude": 49.210441,
+      "longitude": 16.618555,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 29,
+      "name": "Čertova rokle",
+      "latitude": 49.226399,
+      "longitude": 16.623268,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 30,
+      "name": "Mifkova",
+      "latitude": 49.207263,
+      "longitude": 16.692381,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 31,
+      "name": "Juliánov",
+      "latitude": 49.196209,
+      "longitude": 16.654629,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 32,
+      "name": "Stránská skála, smyčka",
+      "latitude": 49.19272,
+      "longitude": 16.677384,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 33,
+      "name": "Novolíšeňská",
+      "latitude": 49.20182,
+      "longitude": 16.670471,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 34,
+      "name": "Komárov",
+      "latitude": 49.175244,
+      "longitude": 16.62151,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 35,
+      "name": "Technologický park",
+      "latitude": 49.231561,
+      "longitude": 16.576901,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 36,
+      "name": "Letiště Tuřany, terminál",
+      "latitude": 49.15483,
+      "longitude": 16.692439,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 37,
+      "name": "Pálavské náměstí",
+      "latitude": 49.205873,
+      "longitude": 16.657823,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 38,
+      "name": "Jírova",
+      "latitude": 49.209219,
+      "longitude": 16.687734,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 39,
+      "name": "Kamenný vrch",
+      "latitude": 49.179831,
+      "longitude": 16.54776,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 40,
+      "name": "Černého",
+      "latitude": 49.213984,
+      "longitude": 16.52295,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 41,
+      "name": "Klarisky",
+      "latitude": 49.257047,
+      "longitude": 16.622603,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 42,
+      "name": "Šlapanice, Kalvodova",
+      "latitude": 49.16643,
+      "longitude": 16.726286,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 43,
+      "name": "Srbská",
+      "latitude": 49.228165,
+      "longitude": 16.586996,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 44,
+      "name": "Slatina, sídliště",
+      "latitude": 49.181876,
+      "longitude": 16.690302,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 45,
+      "name": "Vychodilova",
+      "latitude": 49.220318,
+      "longitude": 16.571605,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 46,
+      "name": "Barvičova",
+      "latitude": 49.201118,
+      "longitude": 16.575765,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 47,
+      "name": "Komín, sídliště",
+      "latitude": 49.226919,
+      "longitude": 16.553423,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 48,
+      "name": "Preslova",
+      "latitude": 49.199298,
+      "longitude": 16.570799,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 49,
+      "name": "Komenského náměstí",
+      "latitude": 49.197064,
+      "longitude": 16.602089,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 50,
+      "name": "Obilní trh",
+      "latitude": 49.198122,
+      "longitude": 16.597847,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 51,
+      "name": "Autobusové nádraží",
+      "latitude": 49.186521,
+      "longitude": 16.617986,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 52,
+      "name": "ÚAN Zvonařka",
+      "latitude": 49.185353,
+      "longitude": 16.61643,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 53,
+      "name": "Úzká",
+      "latitude": 49.18946,
+      "longitude": 16.613739,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 54,
+      "name": "Náměstí Svobody",
+      "latitude": 49.195661,
+      "longitude": 16.608003,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 55,
+      "name": "Skácelova",
+      "latitude": 49.221527,
+      "longitude": 16.585279,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 56,
+      "name": "Halasovo náměstí",
+      "latitude": 49.223382,
+      "longitude": 16.622508,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 57,
+      "name": "Vojenská nemocnice",
+      "latitude": 49.202275,
+      "longitude": 16.629689,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 58,
+      "name": "Geislerova",
+      "latitude": 49.192767,
+      "longitude": 16.635051,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 59,
+      "name": "Tržní",
+      "latitude": 49.189574,
+      "longitude": 16.630826,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 60,
+      "name": "Křídlovická",
+      "latitude": 49.185293,
+      "longitude": 16.60265,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 61,
+      "name": "Celní",
+      "latitude": 49.179358,
+      "longitude": 16.595285,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 62,
+      "name": "Židenice, nádraží",
+      "latitude": 49.203376,
+      "longitude": 16.636309,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 63,
+      "name": "ARENA BRNO",
+      "latitude": 49.191453,
+      "longitude": 16.576241,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 64,
+      "name": "Kamenolom",
+      "latitude": 49.221927,
+      "longitude": 16.536894,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 65,
+      "name": "Černovičky",
+      "latitude": 49.183212,
+      "longitude": 16.668265,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
     }
   ]
 }

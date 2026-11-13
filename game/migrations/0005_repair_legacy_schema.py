@@ -3,6 +3,8 @@ from django.db import migrations
 
 def repair_legacy_schema(apps, schema_editor):
     """Repair SQLite schema drift when early migrations were edited after apply."""
+    if schema_editor.connection.vendor != 'sqlite':
+        return
 
     def get_columns(cursor, table_name):
         rows = cursor.execute(f"PRAGMA table_info({table_name})").fetchall()
