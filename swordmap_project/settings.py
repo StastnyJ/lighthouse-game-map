@@ -30,7 +30,11 @@ SECRET_KEY = 'django-insecure-17fm!5nj(gzjv)u6)yg^eo0whgi_(5f3q8c7=az_17rs9@2t1f
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS = ['https://smazeny.pull.cz']
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv('CSRF_TRUSTED_ORIGINS', 'https://smazeny.pull.cz').split(',')
+    if origin.strip()
+]
 # OSM tile servers require an HTTP Referer for usage policy compliance.
 SECURE_REFERRER_POLICY = 'strict-origin-when-cross-origin'
 

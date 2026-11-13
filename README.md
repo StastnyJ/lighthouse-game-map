@@ -48,6 +48,8 @@ This awards 5 bonus points per currently owned zone at minutes 10, 20, 30, etc. 
 
 The recommended way to run the application is via Docker Compose. Ensure your `.env` file is set up with PostgreSQL database credentials.
 
+For HTTPS hosting, set `CSRF_TRUSTED_ORIGINS=https://your-domain.example` in `.env` to the exact public origin, including a port if nonstandard. Multiple origins can be comma-separated. Recreate the containers after changing environment variables. CSRF protection remains enabled.
+
 1. **Build and Run the Containers**:
     ```bash
     docker-compose up -d --build

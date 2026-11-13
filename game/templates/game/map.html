@@ -780,8 +780,16 @@
             headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken, 'X-Map-Token': locationToken },
             body: JSON.stringify({ latitude: currentLatitude, longitude: currentLongitude }),
           });
-          document.getElementById('location-sync-status').textContent = response.ok
-            ? 'Poloha sdílena s administrátorem.' : `Sdílení polohy selhalo (${response.status}). Obnovte stránku.`;
+          let message = 'Poloha sdílena s administrátorem.';
+          if (!response.ok) {
+            const error = await response.json().catch(() => null);
+            message = response.status === 403 && !error
+              ? 'Sdílení polohy blokuje CSRF ochrana. Zkontrolujte CSRF_TRUSTED_ORIGINS na serveru a obnovte stránku.'
+              : response.status === 403
+                ? 'Sdílení polohy: neplatný nebo vypršelý přístup týmu. Otevřete znovu mapu svého týmu.'
+                : `Sdílení polohy selhalo (${response.status}).`;
+          }
+          document.getElementById('location-sync-status').textContent = message;
         } catch (error) {
           console.warn('Location reporting failed:', error);
           document.getElementById('location-sync-status').textContent = 'Sdílení polohy selhalo: zkontrolujte připojení.';

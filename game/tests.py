@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, Client, override_settings
 from django.utils import timezone
 from datetime import timedelta
 
@@ -72,6 +72,24 @@ class PlayerLocationTests(TestCase):
         self.assertEqual(self.client.get('/api/admin/player-locations/').status_code, 200)
         self.client.defaults['HTTP_X_MAP_TOKEN'] = team_token + 'tampered'
         self.assertEqual(self.client.get('/api/admin/player-locations/').status_code, 403)
+
+    @override_settings(CSRF_TRUSTED_ORIGINS=['https://game.example'])
+    def test_https_proxy_location_report_requires_trusted_origin_and_csrf_token(self):
+        from django.core import signing
+        client = Client(enforce_csrf_checks=True)
+        client.get('/map/red/')
+        headers = {
+            'HTTP_ORIGIN': 'https://game.example',
+            'HTTP_X_MAP_TOKEN': signing.dumps('Red', salt='map-locations'),
+            'HTTP_X_CSRFTOKEN': client.cookies['csrftoken'].value,
+        }
+        data = {'latitude': 49, 'longitude': 16}
+        self.assertEqual(client.post('/api/player-location/', data, content_type='application/json', **headers).status_code, 200)
+        headers['HTTP_ORIGIN'] = 'https://untrusted.example'
+        self.assertEqual(client.post('/api/player-location/', data, content_type='application/json', **headers).status_code, 403)
+        headers['HTTP_ORIGIN'] = 'https://game.example'
+        del headers['HTTP_X_CSRFTOKEN']
+        self.assertEqual(client.post('/api/player-location/', data, content_type='application/json', **headers).status_code, 403)
 
 
 class ZoneBonusTests(TestCase):
