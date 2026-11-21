@@ -113,6 +113,61 @@ def award_zone_bonuses(game, now, scoring_config):
         locked_game.save(update_fields=['zone_bonus_processed_at'])
 
 
+def complete_due_captures(now, scoring_config=None, capture_duration_seconds=None):
+    """Finish captures from either the worker or polling, serializing both callers."""
+    if scoring_config is None:
+        scoring_config = load_scoring_config()
+    if capture_duration_seconds is None:
+        capture_duration_seconds = load_game_settings()['capture_duration_seconds']
+    with transaction.atomic():
+        game = Game.objects.select_for_update().first()
+        if (not game or not game.start_time or not game.end_time
+                or now < game.start_time or now > game.end_time):
+            return
+        capturing_zones = Zone.objects.select_for_update().filter(status='CAPTURING')
+        for zone in capturing_zones:
+            if zone.capture_started_at:
+                diff = now - zone.capture_started_at
+                if diff.total_seconds() >= capture_duration_seconds:
+                    capturing_team = zone.capturing_team
+                    if capturing_team is None:
+                        zone.status = 'NEUTRAL'
+                        zone.capture_started_at = None
+                        zone.save(update_fields=['status', 'capture_started_at'])
+                        continue
+
+                    previous_owner = zone.owner
+                    capture_points = scoring_config['capture']
+
+                    # Recapture rule: if the capturing team lost this zone before,
+                    # award min(minutes since loss, max) instead of the standard points.
+                    if (
+                        zone.last_lost_by_team_name
+                        and zone.last_lost_at
+                        and zone.last_lost_by_team_name.lower() == capturing_team.name.lower()
+                    ):
+                        minutes_since_loss = int((now - zone.last_lost_at).total_seconds() // 60)
+                        capture_points = min(
+                            max(minutes_since_loss, scoring_config['recapture_min']),
+                            scoring_config['recapture_max']
+                        )
+
+                    if previous_owner and previous_owner != capturing_team:
+                        zone.last_lost_at = now
+                        zone.last_lost_by_team_name = previous_owner.name
+
+                    zone.status = 'OWNED'
+                    zone.owner = capturing_team
+
+                    # Reward for capturing
+                    Team.objects.filter(pk=capturing_team.pk).update(score=F('score') + capture_points)
+
+                    zone.capturing_team = None
+                    zone.capture_started_at = None
+                    zone.last_score_update = now
+                    zone.save()
+
+
 class Command(BaseCommand):
     help = 'Process game state: update scores and handle captures'
 
@@ -177,52 +232,7 @@ class Command(BaseCommand):
                 continue
 
             # 1. Handle Captures
-            capturing_zones = Zone.objects.filter(status='CAPTURING')
-            for zone in capturing_zones:
-                if zone.capture_started_at:
-                    diff = now - zone.capture_started_at
-                    if diff.total_seconds() >= capture_duration_seconds:
-                        capturing_team = zone.capturing_team
-                        if capturing_team is None:
-                            zone.status = 'NEUTRAL'
-                            zone.capture_started_at = None
-                            zone.save(update_fields=['status', 'capture_started_at'])
-                            continue
-
-                        previous_owner = zone.owner
-                        capture_points = scoring_config['capture']
-
-                        # Recapture rule: if the capturing team lost this zone before,
-                        # award min(minutes since loss, max) instead of the standard points.
-                        if (
-                            zone.last_lost_by_team_name
-                            and zone.last_lost_at
-                            and zone.last_lost_by_team_name.lower() == capturing_team.name.lower()
-                        ):
-                            minutes_since_loss = int((now - zone.last_lost_at).total_seconds() // 60)
-                            capture_points = min(
-                                max(minutes_since_loss, scoring_config['recapture_min']),
-                                scoring_config['recapture_max']
-                            )
-
-                        if previous_owner and previous_owner != capturing_team:
-                            zone.last_lost_at = now
-                            zone.last_lost_by_team_name = previous_owner.name
-
-                        zone.status = 'OWNED'
-                        zone.owner = capturing_team
-
-                        # Reward for capturing
-                        capturing_team.score += capture_points
-                        capturing_team.save(update_fields=['score'])
-                        
-                        zone.capturing_team = None
-                        zone.capture_started_at = None
-                        zone.last_score_update = now
-                        zone.save()
-                        self.stdout.write(self.style.SUCCESS(
-                            f"Zone {zone.name} captured by {zone.owner.name} (+{capture_points} points)"
-                        ))
+            complete_due_captures(now, scoring_config, capture_duration_seconds)
 
             # 2. Update Scores
             # Points are counted for each minute holding the point of interest (excluding bases)

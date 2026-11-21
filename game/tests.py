@@ -146,3 +146,21 @@ class ZoneBonusTests(TestCase):
                 self.team.refresh_from_db()
                 self.assertEqual(self.team.score, 0)
 
+
+
+class CaptureCompletionTests(TestCase):
+    def test_poll_completes_due_capture_once_without_worker(self):
+        now = timezone.now()
+        Game.objects.create(start_time=now - timedelta(minutes=5), end_time=now + timedelta(hours=1))
+        team = Team.objects.create(name='Capture test', color='#ff0000')
+        zone = Zone.objects.create(name='Stop', status='CAPTURING', capturing_team=team,
+                                   capture_started_at=now - timedelta(seconds=61))
+        with patch('pathlib.Path.read_text', return_value='{"capture_duration_seconds": 60, "scoring": {"capture": 5}}'):
+            self.client.get('/api/state/')
+            self.client.get('/api/state/')
+        zone.refresh_from_db()
+        team.refresh_from_db()
+        self.assertEqual(zone.status, 'OWNED')
+        self.assertEqual(zone.owner, team)
+        self.assertIsNone(zone.capture_started_at)
+        self.assertEqual(team.score, 5)

@@ -60,6 +60,8 @@ def admin_player_locations(request):
     } for player in locations]})
 
 def game_state(request):
+    from .management.commands.process_game_state import complete_due_captures
+    complete_due_captures(timezone.now())
     capture_duration_seconds = load_game_settings()['capture_duration_seconds']
     zones = Zone.objects.all()
     capturing_zones = Zone.objects.filter(status='CAPTURING')
