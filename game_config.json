@@ -631,6 +631,24 @@
       "is_base": false,
       "color": "#FFFFFF",
       "adjacent_zones": []
+    },
+    {
+      "id": 66,
+      "name": "Tkalcovská",
+      "latitude": 49.200261,
+      "longitude": 16.626109,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
+    },
+    {
+      "id": 67,
+      "name": "Tábor",
+      "latitude": 49.210553,
+      "longitude": 16.585882,
+      "is_base": false,
+      "color": "#FFFFFF",
+      "adjacent_zones": []
     }
   ]
 }

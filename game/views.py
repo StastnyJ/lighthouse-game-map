@@ -40,68 +40,50 @@ def format_inline_markdown(text):
     escaped = html.escape(text)
     escaped = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', escaped)
     escaped = re.sub(r'`([^`]+)`', r'<code>\1</code>', escaped)
+    escaped = re.sub(
+        r'\[([^\]]+)\]\((https?://[^\s)]+)\)',
+        lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>',
+        escaped,
+    )
     return escaped
 
 
 def render_rules_markdown(text):
-    lines = text.splitlines()
     html_parts = []
-    list_type = None
-    list_open = False
+    lists = []
 
     def close_list():
-        nonlocal list_open, list_type
-        if list_open:
-            html_parts.append(f'</{list_type}>')
-            list_open = False
-            list_type = None
+        _, kind = lists.pop()
+        html_parts.append(f'</li></{kind}>')
 
-    for raw_line in lines:
-        line = raw_line.rstrip()
-        stripped = line.strip()
-
+    for raw_line in text.splitlines():
+        stripped = raw_line.strip()
         if not stripped:
-            close_list()
             continue
-
-        if stripped.startswith('# '):
-            close_list()
-            html_parts.append(f'<h1>{format_inline_markdown(stripped[2:].strip())}</h1>')
-            continue
-        if stripped.startswith('## '):
-            close_list()
-            html_parts.append(f'<h2>{format_inline_markdown(stripped[3:].strip())}</h2>')
-            continue
-        if stripped.startswith('### '):
-            close_list()
-            html_parts.append(f'<h3>{format_inline_markdown(stripped[4:].strip())}</h3>')
-            continue
-
-        ordered_match = re.match(r'^(\d+)\.\s+(.*)$', stripped)
-        unordered_match = re.match(r'^-\s+(.*)$', stripped)
-
-        if ordered_match:
-            if not list_open or list_type != 'ol':
+        match = re.match(r'^( *)(?:(-)\s+|\d+\.\s+)(.*)$', raw_line)
+        if match:
+            indent = len(match.group(1))
+            kind = 'ul' if match.group(2) else 'ol'
+            while lists and (lists[-1][0] > indent or
+                             (lists[-1][0] == indent and lists[-1][1] != kind)):
                 close_list()
-                html_parts.append('<ol>')
-                list_open = True
-                list_type = 'ol'
-            html_parts.append(f'<li>{format_inline_markdown(ordered_match.group(2))}</li>')
+            if lists and lists[-1][0] == indent:
+                html_parts.append('</li>')
+            else:
+                html_parts.append(f'<{kind}>')
+                lists.append((indent, kind))
+            html_parts.append(f'<li>{format_inline_markdown(match.group(3))}')
             continue
-
-        if unordered_match:
-            if not list_open or list_type != 'ul':
-                close_list()
-                html_parts.append('<ul>')
-                list_open = True
-                list_type = 'ul'
-            html_parts.append(f'<li>{format_inline_markdown(unordered_match.group(1))}</li>')
-            continue
-
+        while lists:
+            close_list()
+        heading = re.match(r'^(#{1,3})\s+(.*)$', stripped)
+        if heading:
+            level = len(heading.group(1))
+            html_parts.append(f'<h{level}>{format_inline_markdown(heading.group(2))}</h{level}>')
+        else:
+            html_parts.append(f'<p>{format_inline_markdown(stripped)}</p>')
+    while lists:
         close_list()
-        html_parts.append(f'<p>{format_inline_markdown(stripped)}</p>')
-
-    close_list()
     return mark_safe('\n'.join(html_parts))
 
 

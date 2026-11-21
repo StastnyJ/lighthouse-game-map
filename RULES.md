@@ -1,59 +1,47 @@
-# Pravidla
+# Šaliněco pravidla
 
-Hráči jsou rozděleni do 3 týmů. Cílem je obsazovat a držet stanoviště, získávat body a mít na konci hry nejvyšší skóre.
+## Obecné
 
-## Základní informace
+- Využijte veřejné dopravy a cestujte po Brně (šaliny, autobusy, trolejbusy, chůze). Ne Bolt, Uber, apod. + elektrokoloběžky/kola.
+- **Jeden** člen týmu se přihlásí na web pod barvou týmu a povolí sledování polohy.
+- **Tým musí držet spolu**.
+- Komunikace bude probíhat přes Discord.
+- V MHD platí pravidlo **NK**.
+- Je zakázáno jakkoliv uměle **ovlivňovat polohu**.
+- Zastávky jsou pouze v zónách **100+101**. (s výjimkou těch co nejsou :D)
 
-- Délka hry: 90 minut.
-- Vítěz: tým s nejvyšším počtem bodů po skončení hry.
+## Cestování
 
-## Herní plocha a bezpečnost
+- Chováme se jako lidi
+- Pro jízdu máme buď:
+  - Aktivní šalinkartu (dlouhodobou jízdenku)
+  - Papírovou jízdenku, kterou během **první jízdy** narazíme u jednoho z terminálů (pak si lístek musíme **držet při sobě**)
+- U zastávek na znamení:
+  - Nástup - **stojíme na viditelném místě**
+  - Výstup - **stiskneme libovolné tlačítko pro otevření dveří, to zezelená a dá znamení**
 
-Hra probíhá v zámeckém parku a přilehlém okolí. Herní plocha je vyznačena ve webové aplikaci šedou plochou.
+## Zabírání zastávek
 
-- Je zakázáno se pohybovat jinde než v herní ploše.
-- Je zakázáno pohybovat se po vozovce určené pro auta.
-- Pohyb po chodnících je povolen.
-- Bezpečnost a fair play mají přednost před herní situací.
+- Pro zabrání zastávky se musí tým nacházet v **blízkosti zastávky** a **kliknout na ni ve webové aplikaci**.
+- Pokud jsou na zastávce **2+ týmy**, zabírání je pozastaveno.
+- Zastávky je možné **krást**.
+- **Bodování**:
+  - **1** bod/zastávka každých **15** minut
 
-## Základny
+## Časově omezené úkoly
 
-- Každý tým má vlastní základnu, ve které začíná.
-- Základny nelze dobývat ani obsazovat.
+- Úkoly na **omezený čas**, kde **rychlost jejich splnění** určuje ohodnocení.
+- Zveřejňovány na **Discordu**.
+- Vyžadují vždy **odeslání fotky**.
+- **Bodování**:
+  - **3** body - První tým
+  - **2** body - Druhý tým
+  - **1** bod - Třetí tým
+  - **0** bodů - Každý další tým
 
-## Obsazování stanovišť
+## Konec hry
 
-Obsazování probíhá přes QR kód ve webové aplikaci:
-
-1. Hráč doběhne ke stanovišti a naskenuje jeho QR kód.
-2. Tím začne obléhání stanoviště.
-3. Obléhat lze pouze stanoviště, které sousedí s územím spojeným se základnou daného týmu (tj. se souvislou komponentou navázanou na vlastní základnu).
-4. Během obléhání není potřeba, aby se hráč nacházel u QR kódu.
-
-- Pokud během 1 minuty naskenuje stejné stanoviště jiný tým, obléhání se okamžitě přeruší.
-- Pro rušení obléhání platí stejná pravidla jako pro obléhání.
-- Pokud tým obléhání udrží celou 1 minutu, stanoviště dobyje.
-- Za dobytí získá tým 5 bodů.
-
-## Bodování
-
-- Za každou další celou minutu držení stanoviště: +1 bod.
-- Pokud tým stanoviště ztratí a později ho znovu dobude, získá pouze `min(počet minut od ztráty, 5)` bodů.
-- Po skončení hry získá každý tým +10 bodů za každé jím držené stanoviště.
-
-## Souboje hráčů
-
-Každý hráč má za kalhotami šátek v barvě svého týmu.
-
-- Hráč je vyřazen, pokud mu soupeř vytrhne šátek.
-- Hráč je vyřazen i tehdy, pokud mu šátek samovolně vypadne, soupeř si toho všimne a upozorní na to.
-
-V případě, že by měl souboj probíhat na chodníku mimo zámecký park (týká se to předeším severní, východní a jižní hrany herní plochy), je nahrazen soubojem ve hře "Kámen, nůžky, papír". Chodníky obecně fungují jako jednosměrky pro členy různých týmů.
-
-Vyřazený hráč:
-
-- nese šátek viditelně nad hlavou,
-- přesune se do vlastní základny,
-- v základně se znovu oživí.
-
-Vyřazený hráč nesmí zahajovat ani rušit obléhání.
+- Konec hry po **cca 2** hodinách od začátku.
+- Sraz v podniku **Hostinec Pod Schody** nedaleko FI
+- **Penalizace**:
+  - Ztráta **1** bod/minuta zpoždění.
