@@ -2,7 +2,7 @@
   "page_title": "Šaliněco",
   "capture_duration_seconds": 1,
   "mode": "FREE",
-  "accepted_distance": 100,
+  "accepted_distance": 50,
   "topLeft": {
     "latitude": 49.2501,
     "longitude": 16.5196
@@ -246,15 +246,6 @@
       "adjacent_zones": []
     },
     {
-      "id": 21,
-      "name": "Modřice, smyčka",
-      "latitude": 49.126974,
-      "longitude": 16.604488,
-      "is_base": false,
-      "color": "#FFFFFF",
-      "adjacent_zones": []
-    },
-    {
       "id": 22,
       "name": "Rakovecká",
       "latitude": 49.226049,
@@ -430,15 +421,6 @@
       "name": "Klarisky",
       "latitude": 49.257047,
       "longitude": 16.622603,
-      "is_base": false,
-      "color": "#FFFFFF",
-      "adjacent_zones": []
-    },
-    {
-      "id": 42,
-      "name": "Šlapanice, Kalvodova",
-      "latitude": 49.16643,
-      "longitude": 16.726286,
       "is_base": false,
       "color": "#FFFFFF",
       "adjacent_zones": []
